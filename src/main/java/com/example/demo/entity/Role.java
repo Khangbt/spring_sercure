@@ -5,6 +5,7 @@ import lombok.Setter;
 import vn.com.itechcorp.base.persistence.model.BaseSerialIDEntry;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.util.Collection;
@@ -15,6 +16,6 @@ import java.util.Collection;
 @Setter
 public class Role extends BaseSerialIDEntry {
     private String name;
-    @ManyToMany(mappedBy = "roleList")
+    @ManyToMany(mappedBy = "roleList",fetch = FetchType.EAGER)
     private Collection<User> roleList;
 }

@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Configuration
@@ -28,28 +29,13 @@ public class AuditingConfig {
 
         @Override
         public Optional<String> getCurrentAuditor() {
-//
-//            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//            if (null == authentication || !authentication.isAuthenticated()) {
-//                throw new CustomExceptionHandler("Unauthorized", HttpStatus.UNAUTHORIZED );
-//            }
-//            Object obj = authentication.getPrincipal();
-//            String email = null;
-//            Long id = null;
-//            if (obj instanceof UserDetails) {
-//                email = ((UserDetails) obj).getUsername();
-//                try {
-////                    id = humanResourcesRepository.findByEmail2(email).getHumanResourceId();
-//
-//                }catch (Exception e){
-//                    return Optional.ofNullable(0L);
-//                }
-//
-//            } else {
-//                throw new CustomExceptionHandler("Unauthorized", HttpStatus.UNAUTHORIZED );
-//            }
-//            return Optional.ofNullable(id);
-            return Optional.ofNullable("0L");
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (null == authentication || !authentication.isAuthenticated()) {
+                throw new CustomExceptionHandler("Unauthorized", HttpStatus.UNAUTHORIZED);
+            }
+            Object obj = authentication.getPrincipal();
+            return Optional.ofNullable(Objects.nonNull(obj) ? ((UserDetails) obj).getUsername()
+                    : "");
         }
     }
 }

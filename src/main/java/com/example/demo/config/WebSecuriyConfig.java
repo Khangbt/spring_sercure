@@ -70,16 +70,22 @@ public class WebSecuriyConfig extends WebSecurityConfigurerAdapter {
     /* -- Config --*/
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and();
-        http.csrf().disable();
-//        http.formLogin(Customizer.withDefaults());
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests()
-                .antMatchers("/user/login").permitAll()
-                .anyRequest().authenticated();
-        http.addFilterBefore(jwtAuthorizaionFilterBean(), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(crosFilter, ChannelProcessingFilter.class);
-        http.exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint);
+//        http.cors().and();
+//        http.csrf().disable();
+////        http.formLogin(Customizer.withDefaults());
+//        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//        http.authorizeRequests()
+//                .antMatchers("/user/login","/swagger-ui.html","/swagger-ui/**").permitAll()
+//                .anyRequest().authenticated();
+//        http.addFilterBefore(jwtAuthorizaionFilterBean(), UsernamePasswordAuthenticationFilter.class)
+//                .addFilterBefore(crosFilter, ChannelProcessingFilter.class);
+//        http.exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint);
+
+        http
+                .csrf().disable()
+                .authorizeRequests().anyRequest().authenticated()
+                .and()
+                .httpBasic();
     }
 
 
