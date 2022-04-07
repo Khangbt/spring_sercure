@@ -45,7 +45,6 @@ public class UserController extends BaseDtoAPIMethod<UserDto, User, Long> {
 
     @PostMapping("/add")
     public ResponseEntity<APIResponse<UserDto>> create(@RequestBody UserCreateRequest object) {
-
         return super.create(object);
     }
 

@@ -27,13 +27,14 @@ public class User extends AuditableSerialIDEntry {
     private String name;
 
 
-    public User(String fullName, String passWork, String name) {
+    public User(String fullName, String passWork, String name, List<Role> roleList) {
         this.fullName = fullName;
         this.passWork = passWork;
         this.name = name;
+        this.roleList = roleList;
     }
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))

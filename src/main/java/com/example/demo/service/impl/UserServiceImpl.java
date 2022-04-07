@@ -1,5 +1,6 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.dto.RoleDto;
 import com.example.demo.dto.UserDto;
 import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
@@ -12,7 +13,7 @@ import vn.com.itechcorp.base.persistence.repository.AuditableRepository;
 import vn.com.itechcorp.base.service.dto.BaseDtoCreate;
 import vn.com.itechcorp.base.service.impl.AuditableDtoJpaServiceImpl;
 
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserServiceImpl extends AuditableDtoJpaServiceImpl<UserDto, User, Long> implements UserService {
@@ -34,7 +35,17 @@ public class UserServiceImpl extends AuditableDtoJpaServiceImpl<UserDto, User, L
     public UserDto convert(User user) {
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
-        userDto.setName(user.getFullName());
+        userDto.setName(user.getName());
+        Set<RoleDto> roleDtos = new HashSet<>();
+        if (Objects.nonNull(user.getRoleList())) {
+            user.getRoleList().forEach(role -> {
+                RoleDto dto = new RoleDto();
+                dto.setId(role.getId());
+                dto.setName(role.getName());
+                roleDtos.add(dto);
+            });
+        }
+        userDto.setRoleList(roleDtos);
         return userDto;
     }
 
