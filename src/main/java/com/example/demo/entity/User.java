@@ -17,15 +17,14 @@ import java.util.List;
 @Setter
 @EntityListeners(AuditingEntityListener.class)
 public class User extends AuditableSerialIDEntry {
-    @Column(name = "fullName")
+    @Column(name = "full_name")
     private String fullName;
 
-    @Column(name = "passWork")
+    @Column(name = "pass_work")
     private String passWork;
 
     @Column(name = "name")
     private String name;
-
 
     public User(String fullName, String passWork, String name, List<Role> roleList) {
         this.fullName = fullName;

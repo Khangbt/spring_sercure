@@ -11,6 +11,7 @@ import com.example.demo.request.UserUpdateRequest;
 import com.example.demo.service.UserService;
 import com.example.demo.service.impl.UserServiceImpl;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 import vn.com.itechcorp.base.api.method.AsyncBaseDtoAPIMethod;
 import vn.com.itechcorp.base.api.response.APIListResponse;
@@ -20,6 +21,7 @@ import vn.com.itechcorp.base.service.filter.PaginationInfo;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executors;
 
 @RestController
 @RequestMapping("/api/async/user")
@@ -34,9 +36,16 @@ public class UserControllerAsync extends AsyncBaseDtoAPIMethod<UserDto, User, Lo
     @Override
     @GetMapping("/all")
     @IsGet
+    @Async
     public CompletableFuture<ResponseEntity<APIListResponse<List<UserDto>>>> getListAsync(PaginationInfo pageInfo) {
         if (Objects.isNull(pageInfo))
             pageInfo = new PaginationInfo();
+        Executors.newSingleThreadExecutor().submit(() -> {
+            System.out.println("sdadada");
+            // yourCode
+
+            System.out.println("sdawwdada");
+        });
         return super.getListAsync(pageInfo);
     }
 
